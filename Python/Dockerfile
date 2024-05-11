@@ -2,8 +2,10 @@ FROM python:3.12.3-bullseye
 
 WORKDIR /app
 
-COPY . /app
+COPY requirements/requirements.txt /app
 
-RUN pip install -r requirements/requirements.txt
+RUN pip install -r requirements.txt
+
+COPY . /app
 
 CMD ["uvicorn", "spaceship.main:app", "--host=0.0.0.0", "--port=8080"]
