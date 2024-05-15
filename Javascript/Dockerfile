@@ -1,4 +1,4 @@
-FROM node:22-alpine
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
@@ -8,4 +8,10 @@ RUN npm install
 
 COPY app.js ./
 
-ENTRYPOINT ["npm", "start"]
+FROM gcr.io/distroless/nodejs22-debian12
+
+WORKDIR /app
+
+COPY --from=builder /app .
+
+CMD ["app.js"]
